@@ -1,0 +1,31 @@
+.success-container {
+  text-align: center;
+  padding: 40px;
+}
+
+.success-container h1 {
+  color: #005ac2;
+  font-size: 30px;
+}
+
+.brand {
+  color: #003d99;
+  font-weight: bold;
+}
+
+.time {
+  color: green;
+  font-weight: bold;
+}
+
+p {
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.thanks {
+  margin-top: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #005ac2;
+}
