@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../Styles/Checkout.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { FaUser, FaPhone, FaTruck, FaStore, FaMoneyBill } from "react-icons/fa";
 
-function CheckoutPage({ cart }) {
+function Checkout({ cart }) {
   const navigate = useNavigate();
-
-  const USD_TO_LBP = 89000;
-
+  
   const totalUSD = cart.reduce(
     (sum, item) => sum + item.qty * parseFloat(item.price),
     0
   );
 
-  const totalLBP = totalUSD * USD_TO_LBP;
+  const totalLBP = totalUSD * 89600;
 
+  
   const [form, setForm] = useState({
     fullName: "",
     mobile: "",
@@ -41,101 +41,147 @@ function CheckoutPage({ cart }) {
 
   if (!cart || cart.length === 0) {
     return (
-      <div className="checkout-container">
-        <h1>Checkout</h1>
-        <p>Your cart is empty.</p>
+      <div className="container mt-5 text-center">
+        <h2>Your cart is empty.</h2>
       </div>
     );
   }
 
   return (
-    <div className="checkout-container">
-      <h1>Checkout</h1>
+    <div className="container my-5">
+      <div className="row justify-content-center">
+        <div className="col-lg-7 col-md-8 mb-4">
+          <div className="p-4 shadow rounded bg-white">
+            <h2 className="mb-4 text-primary fw-bold">
+              <FaTruck className="me-2" />
+              Checkout
+            </h2>
 
-      <form className="checkout-form" onSubmit={handleSubmit}>
-        
-        <label>
-          Full Name
-          <input
-            type="text"
-            name="fullName"
-            value={form.fullName}
-            onChange={handleChange}
-          />
-        </label>
+            <form onSubmit={handleSubmit}>
+             
+              <label className="form-label fw-semibold">
+                Full Name <FaUser />
+              </label>
+              <input
+                type="text"
+                name="fullName"
+                className="form-control mb-3"
+                placeholder="Enter your name"
+                value={form.fullName}
+                onChange={handleChange}
+              />
 
-        <label>
-          Mobile Number
-          <input
-            type="tel"
-            name="mobile"
-            value={form.mobile}
-            onChange={handleChange}
-          />
-        </label>
+              
+              <label className="form-label fw-semibold">
+                Mobile Number <FaPhone />
+              </label>
+              <input
+                type="tel"
+                name="mobile"
+                className="form-control mb-3"
+                placeholder="03 123 456"
+                value={form.mobile}
+                onChange={handleChange}
+              />
 
-        <label>
-          Delivery Method
-          <select
-            name="deliveryMethod"
-            value={form.deliveryMethod}
-            onChange={handleChange}
-          >
-            <option value="pickup">Pickup from branch</option>
-            <option value="delivery">Home delivery</option>
-          </select>
-        </label>
+            
+              <label className="form-label fw-semibold">
+                Delivery Method <FaTruck />
+              </label>
+              <select
+                name="deliveryMethod"
+                className="form-select mb-3"
+                value={form.deliveryMethod}
+                onChange={handleChange}
+              >
+                <option value="pickup">Pickup from Branch</option>
+                <option value="delivery">Home Delivery</option>
+              </select>
 
-        {form.deliveryMethod === "pickup" && (
-          <label>
-            Pickup Branch
-            <input
-              type="text"
-              name="branch"
-              value={form.branch}
-              onChange={handleChange}
-            />
-          </label>
-        )}
+            
+              {form.deliveryMethod === "pickup" && (
+                <>
+                  <label className="form-label fw-semibold">
+                    Pickup Branch <FaStore />
+                  </label>
+                  <input
+                    type="text"
+                    name="branch"
+                    className="form-control mb-3"
+                    placeholder="Saida, Tyre, Beirut..."
+                    value={form.branch}
+                    onChange={handleChange}
+                  />
+                </>
+              )}
 
-        {form.deliveryMethod === "delivery" && (
-          <label>
-            Delivery Address
-            <input
-              type="text"
-              name="address"
-              value={form.address}
-              onChange={handleChange}
-            />
-          </label>
-        )}
+              
+              {form.deliveryMethod === "delivery" && (
+                <>
+                  <label className="form-label fw-semibold">
+                    Delivery Address
+                  </label>
+                  <input
+                    type="text"
+                    name="address"
+                    className="form-control mb-3"
+                    placeholder="Enter your address"
+                    value={form.address}
+                    onChange={handleChange}
+                  />
+                </>
+              )}
 
-        <label>
-          Payment Method
-          <select
-            name="payment"
-            value={form.payment}
-            onChange={handleChange}
-          >
-            <option value="">Select payment...</option>
-            <option value="usd">USD</option>
-            <option value="lbp">LBP</option>
-          </select>
-        </label>
+            
+              <label className="form-label fw-semibold">
+                Payment Method <FaMoneyBill />
+              </label>
+              <select
+                name="payment"
+                className="form-select mb-4"
+                value={form.payment}
+                onChange={handleChange}
+              >
+                <option value="">Choose a payment method</option>
+                <option value="usd">USD</option>
+                <option value="lbp">LBP</option>
+              </select>
 
-        {/* ⭐ TOTAL BOX */}
-        <div className="total-box">
-          {form.payment === "lbp"
-            ? `${totalLBP.toLocaleString()} LBP`
-            : `$${totalUSD.toFixed(2)}`}
+              
+              <button className="btn btn-primary w-100 py-2 fw-bold">
+                Submit Order
+              </button>
+            </form>
+          </div>
         </div>
 
-        <button type="submit" className="confirm-btn">
-          Submit Order
-        </button>
-      </form>
+        
+        <div className="col-lg-4 col-md-8">
+          <div className="p-4 shadow rounded bg-white">
+            <h4 className="text-primary fw-bold mb-3">🧾 Order Summary</h4>
+
+            <hr />
+
+            {cart.map((item, index) => (
+              <div key={index} className="mb-3 pb-2 border-bottom">
+                <h5 className="fw-semibold">{item.name}</h5>
+                <p className="mb-1">Qty: {item.qty}</p>
+                <p className="mb-0">
+                  Price: ${parseFloat(item.price).toFixed(2)}
+                </p>
+              </div>
+            ))}
+
+            <div className="mt-3 p-3 bg-light rounded text-center">
+              <h5 className="fw-bold text-primary">
+                Total: ${totalUSD.toFixed(2)}
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
 
-export default CheckoutPage;
+export default Checkout;

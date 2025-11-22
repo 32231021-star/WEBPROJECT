@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "bootstrap-icons/font/bootstrap-icons.css";
+
 import NavBar from "./Components/NavBar";
+import Home from "./pages/Home";
 
 import Breakfast from "./pages/Breakfast";
 import Detergent from "./pages/Detergent";
@@ -26,42 +29,93 @@ const App = () => {
 
   return (
     <Router>
-      <NavBar cartCount={cart.length} />
 
       <Routes>
+
+        {/* ---------- HOME PAGE (NO NAVBAR) ---------- */}
+        <Route path="/" element={<Home />} />
+
+        {/* ---------- PAGES WITH NAVBAR ---------- */}
         <Route
-          path="/"
+          path="/breakfast"
           element={
-            <div style={{ textAlign: "center", marginTop: "40px" }}>
-              <h1>Welcome to Mohamad Market</h1>
-              <p>Please choose a category from the menu above.</p>
-            </div>
+            <>
+              <NavBar cartCount={cart.length} />
+              <Breakfast addToCart={addToCart} />
+            </>
           }
         />
 
         <Route
-          path="/breakfast"
-          element={<Breakfast addToCart={addToCart} />}
+          path="/fruits"
+          element={
+            <>
+              <NavBar cartCount={cart.length} />
+              <Fruit addToCart={addToCart} />
+            </>
+          }
         />
-        <Route path="/fruits" element={<Fruit addToCart={addToCart} />} />
+
         <Route
           path="/dryfood"
-          element={<Dryfoods_Pantry addToCart={addToCart} />}
+          element={
+            <>
+              <NavBar cartCount={cart.length} />
+              <Dryfoods_Pantry addToCart={addToCart} />
+            </>
+          }
         />
+
         <Route
           path="/detergent"
-          element={<Detergent addToCart={addToCart} />}
+          element={
+            <>
+              <NavBar cartCount={cart.length} />
+              <Detergent addToCart={addToCart} />
+            </>
+          }
         />
+
         <Route
           path="/cosmetics"
-          element={<Cosmetics addToCart={addToCart} />}
+          element={
+            <>
+              <NavBar cartCount={cart.length} />
+              <Cosmetics addToCart={addToCart} />
+            </>
+          }
         />
+
         <Route
           path="/cart"
-          element={<CartPage cart={cart} removeItem={removeItem} />}
+          element={
+            <>
+              <NavBar cartCount={cart.length} />
+              <CartPage cart={cart} removeItem={removeItem} />
+            </>
+          }
         />
-        <Route path="/checkout" element={<Checkout cart={cart} />} />
-        <Route path="/success" element={<SuccessPage />} />
+
+        <Route
+          path="/checkout"
+          element={
+            <>
+              <NavBar cartCount={cart.length} />
+              <Checkout cart={cart} />
+            </>
+          }
+        />
+
+        <Route
+          path="/success"
+          element={
+            <>
+              <NavBar cartCount={cart.length} />
+              <SuccessPage />
+            </>
+          }
+        />
+
       </Routes>
     </Router>
   );
