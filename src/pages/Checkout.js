@@ -5,7 +5,7 @@ import { FaUser, FaPhone, FaTruck, FaStore, FaMoneyBill } from "react-icons/fa";
 
 function Checkout({ cart }) {
   const navigate = useNavigate();
-  
+
   const totalUSD = cart.reduce(
     (sum, item) => sum + item.qty * parseFloat(item.price),
     0
@@ -13,7 +13,6 @@ function Checkout({ cart }) {
 
   const totalLBP = totalUSD * 89600;
 
-  
   const [form, setForm] = useState({
     fullName: "",
     mobile: "",
@@ -58,7 +57,6 @@ function Checkout({ cart }) {
             </h2>
 
             <form onSubmit={handleSubmit}>
-             
               <label className="form-label fw-semibold">
                 Full Name <FaUser />
               </label>
@@ -71,7 +69,6 @@ function Checkout({ cart }) {
                 onChange={handleChange}
               />
 
-              
               <label className="form-label fw-semibold">
                 Mobile Number <FaPhone />
               </label>
@@ -84,7 +81,6 @@ function Checkout({ cart }) {
                 onChange={handleChange}
               />
 
-            
               <label className="form-label fw-semibold">
                 Delivery Method <FaTruck />
               </label>
@@ -98,7 +94,6 @@ function Checkout({ cart }) {
                 <option value="delivery">Home Delivery</option>
               </select>
 
-            
               {form.deliveryMethod === "pickup" && (
                 <>
                   <label className="form-label fw-semibold">
@@ -115,7 +110,6 @@ function Checkout({ cart }) {
                 </>
               )}
 
-              
               {form.deliveryMethod === "delivery" && (
                 <>
                   <label className="form-label fw-semibold">
@@ -132,7 +126,6 @@ function Checkout({ cart }) {
                 </>
               )}
 
-            
               <label className="form-label fw-semibold">
                 Payment Method <FaMoneyBill />
               </label>
@@ -147,7 +140,6 @@ function Checkout({ cart }) {
                 <option value="lbp">LBP</option>
               </select>
 
-              
               <button className="btn btn-primary w-100 py-2 fw-bold">
                 Submit Order
               </button>
@@ -155,7 +147,6 @@ function Checkout({ cart }) {
           </div>
         </div>
 
-        
         <div className="col-lg-4 col-md-8">
           <div className="p-4 shadow rounded bg-white">
             <h4 className="text-primary fw-bold mb-3">🧾 Order Summary</h4>
@@ -171,10 +162,13 @@ function Checkout({ cart }) {
                 </p>
               </div>
             ))}
-
-            <div className="mt-3 p-3 bg-light rounded text-center">
+            <div>
               <h5 className="fw-bold text-primary">
-                Total: ${totalUSD.toFixed(2)}
+                Total USD: ${totalUSD.toFixed(2)}
+              </h5>
+
+              <h5 className="fw-bold text-primary">
+                Total LBP: {totalLBP.toLocaleString()} LBP
               </h5>
             </div>
           </div>
